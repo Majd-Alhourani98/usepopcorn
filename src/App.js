@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -48,18 +50,41 @@ const tempWatchedData = [
 function App() {
   const movies = tempMovieData;
   return (
-    <nav className="nav-bar">
-      <div className="logo">
-        <span role="img">🍿</span>
-        <h1>usePopCorn</h1>
-      </div>
+    <>
+      <nav className="nav-bar">
+        <div className="logo">
+          <span role="img">🍿</span>
+          <h1>usePopCorn</h1>
+        </div>
 
-      <input type="text" className="search" placeholder="Search movies..." />
+        <input type="text" className="search" placeholder="Search movies..." />
 
-      <p className="num-results">
-        Found <strong>{movies.length}</strong> results
-      </p>
-    </nav>
+        <p className="num-results">
+          Found <strong>{movies.length}</strong> results
+        </p>
+      </nav>
+
+      <main className="main">
+        <div className="box">
+          <ul className="list list-movies">
+            {movies?.map((movie) => (
+              <li key={movie.imdbID}>
+                <img src={movie.Poster} alt={`${movie.Title} poster`} />
+                <h3>{movie.Title}</h3>
+                <div>
+                  <p>
+                    <span>🗓</span>
+                    <span>{movie.year}</span>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="box"></div>
+      </main>
+    </>
   );
 }
 
