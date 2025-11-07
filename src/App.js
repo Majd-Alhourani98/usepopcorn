@@ -325,28 +325,6 @@ function MovieDetails({ selectedId, watched, onCloseMovie, onAddWatched }) {
     (movie) => movie.imdbID === selectedId
   )?.userRating;
 
-  useEffect(
-    function () {
-      async function getMovieDetails() {
-        try {
-          setIsLoading(true);
-
-          const response = await fetch(
-            `http://www.omdbapi.com/?apikey=${key}&i=${selectedId}`
-          );
-
-          const data = await response.json();
-          setMovie(data);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      getMovieDetails();
-    },
-    [selectedId]
-  );
-
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -374,6 +352,41 @@ function MovieDetails({ selectedId, watched, onCloseMovie, onAddWatched }) {
     Genre: genre,
     Actors: actors,
   } = movie;
+
+  useEffect(
+    function () {
+      async function getMovieDetails() {
+        try {
+          setIsLoading(true);
+
+          const response = await fetch(
+            `http://www.omdbapi.com/?apikey=${key}&i=${selectedId}`
+          );
+
+          const data = await response.json();
+          setMovie(data);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      getMovieDetails();
+    },
+    [selectedId]
+  );
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `Movie | ${title}`;
+
+      return function () {
+        document.title = "UsePopCorn";
+        console.log(`Clean up effect for movie ${title}`);
+      };
+    },
+    [title]
+  );
 
   return (
     <div className="details">
