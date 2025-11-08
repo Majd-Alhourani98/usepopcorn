@@ -55,11 +55,14 @@ const average = (arr) =>
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const [watched, setWatched] = useState(function () {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
 
   function handleSelectMovie(id) {
     setSelectedId(selectedId === id ? null : id);
@@ -71,6 +74,8 @@ export default function App() {
 
   function handleAddWatached(movie) {
     setWatched((watched) => [...watched, movie]);
+    // // localStorage.setItem("watched", watched) stale state
+    // localStorage.setItem("watched", JSON.stringify([...watched, movie]));
   }
 
   function handleDeleteWatched(id) {
@@ -118,6 +123,7 @@ export default function App() {
         return;
       }
 
+      handleCloseMovie();
       fetchMovies();
 
       return function () {
@@ -127,6 +133,13 @@ export default function App() {
     [query]
   );
 
+  useEffect(
+    // we do not have to create any new array [...watched, movie] becuase the effect will run after watched is laready the new state
+    function () {
+      localStorage.setItem("watched", JSON.stringify([...watched]));
+    },
+    [watched]
+  );
   return (
     <>
       <Navbar>
@@ -395,10 +408,27 @@ function MovieDetails({ selectedId, watched, onCloseMovie, onAddWatched }) {
 
       return function () {
         document.title = "UsePopCorn";
-        console.log(`Clean up effect for movie ${title}`);
       };
     },
     [title]
+  );
+
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+          console.log("Close");
+        }
+      }
+
+      document.addEventListener("keydown", callback);
+
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [onCloseMovie]
   );
 
   return (
