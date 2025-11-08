@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 import StarRating from "./StarRating";
 import { useMovies } from "./useMovies";
+import { useLocalStorage } from "./useLocalStorage";
 
 const key = "99496f8d";
 
@@ -13,11 +14,7 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
 
   const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
-
-  const [watched, setWatched] = useState(function () {
-    const storedValue = localStorage.getItem("watched");
-    return JSON.parse(storedValue);
-  });
+  const [watched, setWatched] = useLocalStorage([], "watched");
 
   function handleSelectMovie(id) {
     setSelectedId(selectedId === id ? null : id);
@@ -37,13 +34,6 @@ export default function App() {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
-  useEffect(
-    // we do not have to create any new array [...watched, movie] becuase the effect will run after watched is laready the new state
-    function () {
-      localStorage.setItem("watched", JSON.stringify([...watched]));
-    },
-    [watched]
-  );
   return (
     <>
       <Navbar>
