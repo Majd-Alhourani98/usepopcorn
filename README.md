@@ -33,6 +33,7 @@ A modern, interactive React application for searching movies, viewing detailed i
 - Persist data using browser localStorage
 
 This project demonstrates modern React development practices, including:
+
 - Custom React hooks
 - Component composition
 - State management
@@ -44,12 +45,14 @@ This project demonstrates modern React development practices, including:
 ## ✨ Features
 
 ### 🔍 Movie Search
+
 - Real-time movie search as you type
 - Searches only when query is 3+ characters (reduces API calls)
 - Displays movie posters, titles, and release years
 - Shows number of search results
 
 ### 📺 Movie Details
+
 - Comprehensive movie information:
   - Poster image
   - Title, year, genre
@@ -61,12 +64,14 @@ This project demonstrates modern React development practices, including:
 - Keyboard shortcut: Press `Escape` to close movie details
 
 ### ⭐ Rating System
+
 - Interactive star rating component
 - Hover effects for better UX
 - Rate movies from 1 to 10 stars
 - View your previous ratings
 
 ### 📊 Watched Movies
+
 - Personal list of watched movies
 - Statistics dashboard showing:
   - Total number of movies watched
@@ -77,42 +82,44 @@ This project demonstrates modern React development practices, including:
 - Data persists across page refreshes (localStorage)
 
 ### ⌨️ Keyboard Shortcuts
+
 - `Enter` - Focus search input and clear it
 - `Escape` - Close movie details view
 
 ### 🎨 User Interface
+
 - Modern, dark theme design
 - Collapsible sections
 - Loading states
 - Error handling
 - Responsive layout
 
-## 📸 Screenshots
-
-*Add screenshots of your application here*
-
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - [Node.js](https://nodejs.org/) (version 14 or higher)
 - [npm](https://www.npmjs.com/) (usually comes with Node.js)
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/usepopcorn.git
    cd usepopcorn
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Get an OMDb API Key** (optional, but recommended)
+
    - Visit [OMDb API](http://www.omdbapi.com/apikey.aspx)
    - Get a free API key
    - Replace the API key in `src/App.js` and `src/useMovies.js`:
@@ -122,6 +129,7 @@ Before you begin, ensure you have the following installed:
    - Note: The app includes a demo API key, but it may have rate limits
 
 4. **Start the development server**
+
    ```bash
    npm start
    ```
@@ -163,16 +171,19 @@ usepopcorn/
 ### Application Flow
 
 1. **Search**: User types in the search box
+
    - Query triggers `useMovies` hook
    - Hook fetches movies from OMDb API
    - Results are displayed in the left panel
 
 2. **Select Movie**: User clicks on a movie
+
    - Movie ID is stored in state
    - `MovieDetails` component fetches full movie details
    - Movie details are displayed in the right panel
 
 3. **Rate Movie**: User rates the movie using stars
+
    - Rating is stored in component state
    - User clicks "Add to list" button
    - Movie is added to watched list (stored in localStorage)
@@ -214,15 +225,18 @@ The application uses React's built-in state management:
 Custom hook for fetching movies from the OMDb API.
 
 **Parameters:**
+
 - `query` (string): Search query
 - `callback` (function, optional): Function to execute when query changes
 
 **Returns:**
+
 - `movies` (array): Array of movie objects
 - `isLoading` (boolean): Loading state
 - `error` (string): Error message
 
 **Features:**
+
 - Debounced search (only searches when query is 3+ characters)
 - Request cancellation (prevents race conditions)
 - Error handling
@@ -233,13 +247,16 @@ Custom hook for fetching movies from the OMDb API.
 Custom hook for synchronizing state with localStorage.
 
 **Parameters:**
+
 - `initialState` (any): Default value if localStorage is empty
 - `key` (string): localStorage key
 
 **Returns:**
+
 - `[value, setValue]`: Same API as `useState`
 
 **Features:**
+
 - Automatic synchronization with localStorage
 - Persists data across page refreshes
 - Handles JSON serialization/deserialization
@@ -249,10 +266,12 @@ Custom hook for synchronizing state with localStorage.
 Custom hook for keyboard event handling.
 
 **Parameters:**
+
 - `key` (string): Key code to listen for (e.g., "Enter", "Escape")
 - `action` (function): Function to execute when key is pressed
 
 **Features:**
+
 - Automatic event listener cleanup
 - Case-insensitive key matching
 - Global keyboard shortcuts
@@ -291,6 +310,7 @@ This application uses the [OMDb API](http://www.omdbapi.com/) to fetch movie dat
 ### API Endpoints Used
 
 1. **Search Movies**: `http://www.omdbapi.com/?apikey={key}&s={query}`
+
    - Searches for movies by title
    - Returns array of movie objects
 
